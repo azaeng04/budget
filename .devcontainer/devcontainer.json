@@ -18,7 +18,9 @@
   },
 
   // Features to add to the dev container. More info: https://containers.dev/implementors/features.
-  // "features": {},
+  "features": {
+    "ghcr.io/devcontainers/features/docker-from-docker:1": {}
+  },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
