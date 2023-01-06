@@ -4,16 +4,17 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "nrwl.angular-console",
-        "esbenp.prettier-vscode",
-        "rvest.vs-code-prettier-eslint",
-        "dbaeumer.vscode-eslint",
-        "eamodio.gitlens",
-        "wix.vscode-import-cost",
-        "ms-playwright.playwright",
-        "WallabyJs.wallaby-vscode",
-        "WallabyJs.quokka-vscode"
-      ]
+		"nrwl.angular-console",
+		"esbenp.prettier-vscode",
+		"rvest.vs-code-prettier-eslint",
+		"dbaeumer.vscode-eslint",
+		"eamodio.gitlens",
+		"wix.vscode-import-cost",
+		"ms-playwright.playwright",
+		"WallabyJs.wallaby-vscode",
+		"WallabyJs.quokka-vscode",
+		"george-alisson.html-preview-vscode"
+	]
     }
   },
 
