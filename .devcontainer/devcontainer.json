@@ -13,7 +13,9 @@
 		"ms-playwright.playwright",
 		"WallabyJs.wallaby-vscode",
 		"WallabyJs.quokka-vscode",
-		"george-alisson.html-preview-vscode"
+		"george-alisson.html-preview-vscode",
+		"mtxr.sqltools",
+		"mtxr.sqltools-driver-pg"
 	]
     }
   },

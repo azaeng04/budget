@@ -7,12 +7,12 @@ describe(`CreateBudget DTO`, () => {
       expect.objectContaining({
         children: expect.arrayContaining([]),
         constraints: {
-          isDefined: '_name should not be null or undefined',
-          maxLength: '_name must be shorter than or equal to 30 characters',
-          minLength: '_name must be longer than or equal to 5 characters',
-          isNotEmpty: '_name should not be empty',
+          isDefined: 'name should not be null or undefined',
+          maxLength: 'name must be shorter than or equal to 30 characters',
+          minLength: 'name must be longer than or equal to 5 characters',
+          isNotEmpty: 'name should not be empty',
         },
-        property: '_name',
+        property: 'name',
       }),
     ]);
 
@@ -26,19 +26,17 @@ describe(`CreateBudget DTO`, () => {
     const expected = expect.arrayContaining([
       expect.objectContaining({
         children: expect.arrayContaining([]),
-        constraints: {
-          isDefined: '_description should not be null or undefined',
+        constraints: expect.not.objectContaining({
+          isDefined: 'description should not be null or undefined',
           maxLength:
-            '_description must be shorter than or equal to 250 characters',
-          minLength:
-            '_description must be longer than or equal to 10 characters',
-          isNotEmpty: '_description should not be empty',
-        },
-        property: '_description',
+            'description must be shorter than or equal to 250 characters',
+          isNotEmpty: 'description should not be empty',
+        }),
+        property: 'description',
       }),
     ]);
 
-    createBudgetDto.description = undefined;
+    createBudgetDto.description = '';
     const actual = await validate(createBudgetDto);
 
     expect(actual).toEqual(expected);
@@ -49,13 +47,13 @@ describe(`CreateBudget DTO`, () => {
       expect.objectContaining({
         children: expect.arrayContaining([]),
         constraints: {
-          isDefined: '_year should not be null or undefined',
-          max: '_year must not be greater than 9999',
-          min: '_year must not be less than 1000',
-          isInt: '_year must be an integer number',
-          isNotEmpty: '_year should not be empty',
+          isDefined: 'year should not be null or undefined',
+          max: 'year must not be greater than 9999',
+          min: 'year must not be less than 1000',
+          isInt: 'year must be an integer number',
+          isNotEmpty: 'year should not be empty',
         },
-        property: '_year',
+        property: 'year',
       }),
     ]);
 

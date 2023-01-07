@@ -7,9 +7,9 @@ describe(`GetBudgetsFilter DTO`, () => {
       expect.objectContaining({
         children: expect.arrayContaining([]),
         constraints: {
-          maxLength: '_search must be shorter than or equal to 250 characters',
+          maxLength: 'search must be shorter than or equal to 250 characters',
         },
-        property: '_search',
+        property: 'search',
       }),
     ]);
 
