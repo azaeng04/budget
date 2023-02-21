@@ -1,0 +1,13 @@
+FROM budget
+
+ARG APP_NAME
+
+WORKDIR /apps/$APP_NAME
+
+COPY ./apps/$APP_NAME .
+
+RUN pnpm install
+
+RUN chown -R node /apps
+
+USER node

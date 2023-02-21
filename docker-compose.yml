@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  migrate:
+    image: flyway/flyway
+    command: migrate
+    volumes:
+      - ./shared/api-budget-sql/src/conf:/flyway/conf
+      - ./shared/api-budget-sql/src/sql:/flyway/sql
+    depends_on:
+      db:
+        condition: service_healthy
+  
+  db: 
+    image: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 10s
+      retries: 5
+      start_period: 1s
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - /app/data
+    ports:
+      - "5432:5432"
+
+  api-budget:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+      args:
+        APP_NAME: api-budget
+    environment:
+      NODE_ENV: development
+      DB_HOST: db
+      DB_PORT: 5432
+      NODE_PORT: 3000
+    volumes:
+      - ./apps/api-budget:/usr/src/app
+    entrypoint: pnpm start:dev
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    ports:
+      - "3000:3000"

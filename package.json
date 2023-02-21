@@ -5,11 +5,21 @@
   "scripts": {},
   "private": true,
   "devDependencies": {
-    "@nrwl/nx-cloud": "latest",
-    "nx": "15.0.10",
-    "prettier": "^2.6.2"
+    "@nrwl/eslint-plugin-nx": "15.6.3",
+    "@nrwl/linter": "15.6.3",
+    "@nrwl/nx-cloud": "15.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
+    "eslint": "~8.15.0",
+    "eslint-config-prettier": "8.1.0",
+    "nx": "15.6.3",
+    "prettier": "^2.8.4",
+    "typescript": "^4.7.4"
   },
   "workspaces": [
     "apps/*"
-  ]
+  ],
+  "dependencies": {
+    "@nrwl/js": "15.6.3"
+  }
 }

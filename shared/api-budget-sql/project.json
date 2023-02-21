@@ -1,0 +1,26 @@
+{
+  "name": "shared-api-budget-sql",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "shared/api-budget-sql/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/./shared/api-budget-sql",
+        "main": "shared/api-budget-sql/src/index.ts",
+        "tsConfig": "shared/api-budget-sql/tsconfig.lib.json",
+        "assets": ["shared/api-budget-sql/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["shared/api-budget-sql/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

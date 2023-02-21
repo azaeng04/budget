@@ -9,8 +9,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     BudgetModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
+      host: process.env.DB_HOST,
+      port: +process.env.DB_PORT,
       username: 'postgres',
       password: 'postgres',
       database: 'budget-management',

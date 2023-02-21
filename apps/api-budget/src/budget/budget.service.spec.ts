@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateBudgetDto } from './dto/create-budget.dto';
 import { BudgetService } from './budget.service';
-import { Budget } from './budget.model';
+import { BudgetModelBuilder } from './builders/budget.model.builder';
+import { BudgetModelListBuilder } from './builders/budget.model.list.builder';
 
 describe('BudgetService', () => {
   let service: BudgetService;
@@ -30,12 +31,13 @@ describe('BudgetService', () => {
   });
 
   test('should get a budget by ID', async () => {
-    const expectedResult: Budget = {
+    const expectedResult = new BudgetModelBuilder({
       id: '1',
       name: '2024 Budget',
-      description: 'This is the budget for 2024',
       year: 2024,
-    };
+    })
+      .setDescription('2024 Budget')
+      .create();
 
     service.setBudgets = [expectedResult];
     const { id } = expectedResult;
@@ -46,20 +48,13 @@ describe('BudgetService', () => {
   });
 
   test('should get all budgets', async () => {
-    const expectedResult: Budget[] = [
-      {
-        id: '1',
-        name: '2023 Budget',
-        description: 'This is the budget for 2023',
-        year: 2023,
-      },
-      {
-        id: '2',
-        name: '2024 Budget',
-        description: 'This is the budget for 2024',
-        year: 2024,
-      },
-    ];
+    const expectedResult = new BudgetModelListBuilder()
+      .addToList()
+      .createBudget({ id: '1', name: '2024 Budget', year: 2024 })
+      .addBudgetToList()
+      .createBudget({ id: '2', name: '2024 Budget', year: 2024 })
+      .addBudgetToList()
+      .createList();
 
     service.setBudgets = expectedResult;
 
