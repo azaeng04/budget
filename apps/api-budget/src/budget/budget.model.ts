@@ -9,42 +9,42 @@ export class Budget {
   }
 
   @PrimaryGeneratedColumn('uuid')
-  private _id: string;
+  private id: string;
 
-  public get id(): string {
-    return this._id;
+  public get _id(): string {
+    return this.id;
   }
-  public set id(value: string) {
-    this._id = value;
-  }
-
-  @Column()
-  private _name: string;
-
-  public get name(): string {
-    return this._name;
-  }
-  public set name(value: string) {
-    this._name = value;
+  public set _id(value: string) {
+    this.id = value;
   }
 
   @Column()
-  private _description: string;
+  private name: string;
 
-  public get description(): string {
-    return this._description;
+  public get _name(): string {
+    return this.name;
   }
-  public set description(value: string) {
-    this._description = value;
+  public set _name(value: string) {
+    this.name = value;
   }
 
   @Column()
-  private _year: number;
+  private description: string;
 
-  public get year(): number {
-    return this._year;
+  public get _description(): string {
+    return this.description;
   }
-  public set year(value: number) {
-    this._year = value;
+  public set _description(value: string) {
+    this.description = value;
+  }
+
+  @Column()
+  private year: number;
+
+  public get _year(): number {
+    return this.year;
+  }
+  public set _year(value: number) {
+    this.year = value;
   }
 }

@@ -3,6 +3,7 @@ import { randomUUID } from 'crypto';
 import { CreateBudgetDto } from './dto/create-budget.dto';
 import { Budget } from './budget.model';
 import { UpdateBudgetDto } from './dto/update-budget.dto';
+import { BudgetModelBuilder } from './builders/budget.model.builder';
 
 @Injectable()
 export class BudgetService {
@@ -18,7 +19,7 @@ export class BudgetService {
 
   findBudgetById(id: string) {
     const budgetFound = this.budgets.find(
-      (currentBudget) => currentBudget.id === id,
+      (currentBudget) => currentBudget._id === id,
     );
     if (!budgetFound)
       throw new NotFoundException(`The budget with ID: ${id} cannot be found`);
@@ -27,12 +28,13 @@ export class BudgetService {
 
   createBudget(budgetDto: CreateBudgetDto) {
     const { name, description, year } = budgetDto;
-    const budget: Budget = {
+    const budget: Budget = new BudgetModelBuilder({
       id: randomUUID(),
       name,
-      description,
       year,
-    };
+    })
+      .setDescription(description)
+      .create();
     this.budgets.push(budget);
     return budget;
   }
@@ -40,16 +42,16 @@ export class BudgetService {
   updateBudgetById(id: string, updateBudgetDto: UpdateBudgetDto) {
     const { description, name, year } = updateBudgetDto;
     const budgetToUpdate = this.findBudgetById(id);
-    budgetToUpdate.description = description;
-    budgetToUpdate.name = name;
-    budgetToUpdate.year = year;
+    budgetToUpdate._description = description;
+    budgetToUpdate._name = name;
+    budgetToUpdate._year = year;
     return budgetToUpdate;
   }
 
   deleteBudgetById(id: string) {
     const budgetToDelete = this.findBudgetById(id);
     const newBudgets = this.budgets.filter(
-      (budget) => budget.id !== budgetToDelete.id,
+      (budget) => budget._id !== budgetToDelete._id,
     );
     this.budgets = newBudgets;
   }

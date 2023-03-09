@@ -29,7 +29,7 @@ export class BudgetModelBuilder {
 
   private buildBudgetModel(builder: BudgetModelBuilder) {
     const budget = new Budget(builder.id, builder.name, builder.year);
-    budget.description = builder.description;
+    budget._description = builder.description;
     return budget;
   }
 

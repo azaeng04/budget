@@ -22,7 +22,7 @@ describe('BudgetController', () => {
   });
 
   it('should create a budget', async () => {
-    const expected: Budget = {
+    const expected = {
       id: expect.any(String),
       name: '2022 Budget',
       description: 'This is the 2022 budget',
@@ -47,7 +47,7 @@ describe('BudgetController', () => {
       year: 2022,
     };
 
-    const expected: Budget[] = [
+    const expected = [
       {
         id: expect.any(String),
         ...budgetDto,
@@ -67,7 +67,7 @@ describe('BudgetController', () => {
       year: 2022,
     };
 
-    const expected: Budget = {
+    const expected = {
       id: expect.any(String),
       ...budgetDto,
     };
@@ -100,7 +100,7 @@ describe('BudgetController', () => {
       year: 2023,
     };
 
-    const expected: Budget = {
+    const expected = {
       id: expect.any(String),
       ...updateBudgetDto,
     };

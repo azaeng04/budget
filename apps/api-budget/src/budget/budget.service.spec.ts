@@ -23,9 +23,9 @@ describe('BudgetService', () => {
     };
 
     const expectedResult = service.createBudget(budget1);
-    const { id } = expectedResult;
+    const { _id } = expectedResult;
 
-    const actualResult = service.findBudgetById(id);
+    const actualResult = service.findBudgetById(_id);
 
     expect(actualResult).toEqual(expectedResult);
   });
@@ -40,9 +40,9 @@ describe('BudgetService', () => {
       .create();
 
     service.setBudgets = [expectedResult];
-    const { id } = expectedResult;
+    const { _id } = expectedResult;
 
-    const actualResult = service.findBudgetById(id);
+    const actualResult = service.findBudgetById(_id);
 
     expect(actualResult).toEqual(expectedResult);
   });
@@ -50,7 +50,7 @@ describe('BudgetService', () => {
   test('should get all budgets', async () => {
     const expectedResult = new BudgetModelListBuilder()
       .addToList()
-      .createBudget({ id: '1', name: '2024 Budget', year: 2024 })
+      .createBudget({ id: '1', name: '2023 Budget', year: 2023 })
       .addBudgetToList()
       .createBudget({ id: '2', name: '2024 Budget', year: 2024 })
       .addBudgetToList()
