@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BudgetRepositoryAdapterService } from './budget.adapter.service';
 import { BudgetController } from './budget.controller';
-import { Budget } from './budget.model';
+import { Budget } from './budget.entity';
 import { BudgetRepository } from './budget.repository';
 import { BudgetService } from './budget.service';
 

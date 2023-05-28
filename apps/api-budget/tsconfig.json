@@ -20,7 +20,8 @@
     "noFallthroughCasesInSwitch": false,
     "typeRoots": ["node_modules/@types", "@types"],
     "paths": {
-      "src/*": ["./src/$1"]
+      "src/*": ["./src/$1"],
+      "@/crud": ["./src/crud/service/$1"]
     }
   }
 }

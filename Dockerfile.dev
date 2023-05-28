@@ -2,12 +2,24 @@ FROM budget
 
 ARG APP_NAME
 
-WORKDIR /apps/$APP_NAME
+WORKDIR /budget/
 
-COPY ./apps/$APP_NAME .
+COPY ./apps/$APP_NAME /budget/apps/$APP_NAME
+
+COPY pnpm-*.yaml /budget/
+
+COPY nx.json /budget/
+
+COPY package.json /budget/
+
+COPY tsconfig.base.json /budget/
+
+COPY migrations.json /budget/
+
+COPY .npmrc /budget/
 
 RUN pnpm install
 
-RUN chown -R node /apps
+RUN chown -R node /budget/
 
 USER node

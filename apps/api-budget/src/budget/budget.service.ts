@@ -1,13 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { CreateBudgetDto } from './dto/create-budget.dto';
-import { Budget } from './budget.model';
+import { Budget } from './budget.entity';
 import { UpdateBudgetDto } from './dto/update-budget.dto';
-import { BudgetModelBuilder } from './builders/budget.model.builder';
+import { InjectRepository } from '@nestjs/typeorm';
+import { BudgetRepository } from './budget.repository';
 
 @Injectable()
 export class BudgetService {
   private budgets: Budget[] = [];
+
+  constructor(private budgetRepo: BudgetRepository) {}
 
   getAllBudgets() {
     return this.budgets;
@@ -19,7 +22,7 @@ export class BudgetService {
 
   findBudgetById(id: string) {
     const budgetFound = this.budgets.find(
-      (currentBudget) => currentBudget._id === id,
+      (currentBudget) => currentBudget.id === id,
     );
     if (!budgetFound)
       throw new NotFoundException(`The budget with ID: ${id} cannot be found`);
@@ -28,13 +31,13 @@ export class BudgetService {
 
   createBudget(budgetDto: CreateBudgetDto) {
     const { name, description, year } = budgetDto;
-    const budget: Budget = new BudgetModelBuilder({
+    const budget: Budget = {
       id: randomUUID(),
       name,
+      description,
       year,
-    })
-      .setDescription(description)
-      .create();
+    };
+
     this.budgets.push(budget);
     return budget;
   }
@@ -42,16 +45,16 @@ export class BudgetService {
   updateBudgetById(id: string, updateBudgetDto: UpdateBudgetDto) {
     const { description, name, year } = updateBudgetDto;
     const budgetToUpdate = this.findBudgetById(id);
-    budgetToUpdate._description = description;
-    budgetToUpdate._name = name;
-    budgetToUpdate._year = year;
+    budgetToUpdate.description = description;
+    budgetToUpdate.name = name;
+    budgetToUpdate.year = year;
     return budgetToUpdate;
   }
 
   deleteBudgetById(id: string) {
     const budgetToDelete = this.findBudgetById(id);
     const newBudgets = this.budgets.filter(
-      (budget) => budget._id !== budgetToDelete._id,
+      (budget) => budget.id !== budgetToDelete.id,
     );
     this.budgets = newBudgets;
   }

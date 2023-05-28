@@ -1,17 +1,28 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BudgetController } from './budget.controller';
-import { Budget } from './budget.model';
+import { Budget } from './budget.entity';
 import { BudgetService } from './budget.service';
 import { CreateBudgetDto } from './dto/create-budget.dto';
 import { UpdateBudgetDto } from './dto/update-budget.dto';
+import { setupDataSource } from '../../e2e/setup';
+import { DataSource } from 'typeorm';
+import { BudgetRepositoryAdapterService } from './budget.adapter.service';
+import { BudgetRepository } from './budget.repository';
+import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
 
 describe('BudgetController', () => {
   let controller: BudgetController;
 
   beforeEach(async () => {
+    const dataSource = await setupDataSource();
     const module: TestingModule = await Test.createTestingModule({
       controllers: [BudgetController],
-      providers: [BudgetService],
+      providers: [
+        BudgetService,
+        BudgetRepository,
+        BudgetRepositoryAdapterService,
+        { provide: getRepositoryToken(Budget), useValue: dataSource },
+      ],
     }).compile();
 
     controller = module.get<BudgetController>(BudgetController);

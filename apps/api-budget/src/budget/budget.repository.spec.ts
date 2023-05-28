@@ -1,6 +1,6 @@
 import { TestingModule, Test } from '@nestjs/testing';
 import { BudgetRepositoryAdapterService } from './budget.adapter.service';
-import { Budget } from './budget.model';
+import { Budget } from './budget.entity';
 import { BudgetRepository } from './budget.repository';
 import { CreateBudgetDto } from './dto/create-budget.dto';
 import { Spy, provideAutoSpy } from 'jest-auto-spies';
@@ -26,7 +26,7 @@ describe(`BudgetRepository`, () => {
   });
 
   test('should create a budget', async () => {
-    const expectedResult: Budget = {
+    const expected: Budget = {
       id: expect.any(String),
       name: '2023 Budget',
       description: 'This is the 2023 budget',
@@ -44,19 +44,19 @@ describe(`BudgetRepository`, () => {
       ...expectedArgs,
     };
 
-    budgetRepositoryAdapterServiceSpy.create.mockReturnValueOnce(mockData);
+    budgetRepositoryAdapterServiceSpy.save.mockReturnValueOnce(mockData);
 
-    const actualResult = budgetRepository.createBudget(expectedArgs);
+    const actual = await budgetRepository.create(expectedArgs);
 
-    expect(actualResult).toEqual(expectedResult);
-    expect(budgetRepositoryAdapterServiceSpy.create).toHaveBeenCalledTimes(1);
-    expect(budgetRepositoryAdapterServiceSpy.create).toHaveBeenCalledWith(
+    expect(actual).toEqual(expected);
+    expect(budgetRepositoryAdapterServiceSpy.save).toHaveBeenCalledTimes(1);
+    expect(budgetRepositoryAdapterServiceSpy.save).toHaveBeenCalledWith(
       expectedArgs,
     );
   });
 
   test('should get budget by ID', async () => {
-    const expectedResult: Budget = {
+    const expected: Budget = {
       id: '1',
       description: 'This is the 2023 budget',
       name: '2023 Budget',
@@ -71,17 +71,19 @@ describe(`BudgetRepository`, () => {
     };
 
     const expectedArgs = {
-      id: '1',
+      where: {
+        id: '1',
+      },
     };
     const id = '1';
 
-    budgetRepositoryAdapterServiceSpy.findBy.mockResolvedValueOnce(mockData);
+    budgetRepositoryAdapterServiceSpy.findOne.mockResolvedValueOnce(mockData);
 
-    const actualResult = await budgetRepository.findById(id);
+    const actual = await budgetRepository.findById(id);
 
-    expect(actualResult).toEqual(expectedResult);
-    expect(budgetRepositoryAdapterServiceSpy.findBy).toHaveBeenCalledTimes(1);
-    expect(budgetRepositoryAdapterServiceSpy.findBy).toHaveBeenCalledWith(
+    expect(actual).toEqual(expected);
+    expect(budgetRepositoryAdapterServiceSpy.findOne).toHaveBeenCalledTimes(1);
+    expect(budgetRepositoryAdapterServiceSpy.findOne).toHaveBeenCalledWith(
       expectedArgs,
     );
   });
@@ -117,12 +119,12 @@ describe(`BudgetRepository`, () => {
       },
     ];
 
-    budgetRepositoryAdapterServiceSpy.findAll.mockReturnValue(mockData);
+    budgetRepositoryAdapterServiceSpy.find.mockReturnValue(mockData);
 
     const actualResult = await budgetRepository.findAll();
 
     expect(actualResult).toEqual(expectedResult);
-    expect(budgetRepositoryAdapterServiceSpy.findAll).toHaveBeenCalledWith();
+    expect(budgetRepositoryAdapterServiceSpy.find).toHaveBeenCalledWith();
   });
 
   test('should get all budgets by search criteria', async () => {
@@ -155,11 +157,11 @@ describe(`BudgetRepository`, () => {
     };
 
     const selectQb = {
-      where: jest.fn().mockReturnValue(selectQb1),
+      where: jest.fn().mockReturnValue(jest.fn()),
       getMany: jest.fn().mockReturnValue(mockData),
     };
 
-    budgetRepositoryAdapterServiceSpy.findAll.mockReturnValue(mockData);
+    budgetRepositoryAdapterServiceSpy.find.mockReturnValue(mockData);
     const mockFuncs =
       budgetRepositoryAdapterServiceSpy.createQueryBuilder.mockReturnValue(
         selectQb,
@@ -175,7 +177,7 @@ describe(`BudgetRepository`, () => {
       budgetRepositoryAdapterServiceSpy.createQueryBuilder,
     ).toHaveBeenCalledWith('budget');
     expect(mockFuncs.getMockImplementation()().where).toHaveBeenCalledWith(
-      '(LOWER(budget.id) LIKE LOWER(:search) OR LOWER(budget.name) LIKE LOWER(:search) OR LOWER(budget.description) LIKE LOWER(:search) OR LOWER(budget.year) LIKE LOWER(:search))',
+      '(budget.id LIKE LOWER(:search) OR LOWER(budget.name) LIKE LOWER(:search) OR LOWER(budget.description) LIKE LOWER(:search) OR budget.year LIKE LOWER(:search))',
       { search: '%2024%' },
     );
   });

@@ -1,4 +1,4 @@
-import { Budget } from '../budget.model';
+import { Budget } from '../budget.entity';
 import { BudgetModelBuilder, IBudgetModel } from './budget.model.builder';
 
 export class BudgetModelListBuilder {

@@ -39,8 +39,8 @@ services:
       DB_PORT: 5432
       NODE_PORT: 3000
     volumes:
-      - ./apps/api-budget:/usr/src/app
-    entrypoint: pnpm start:dev
+      - ./apps/api-budget:/budget/apps/api-budget
+    command: pnpm nx run api-budget:start:dev
     depends_on:
       db:
         condition: service_healthy

@@ -3,16 +3,20 @@ import { CreateBudgetDto } from './dto/create-budget.dto';
 import { BudgetService } from './budget.service';
 import { BudgetModelBuilder } from './builders/budget.model.builder';
 import { BudgetModelListBuilder } from './builders/budget.model.list.builder';
+import { BudgetRepository } from './budget.repository';
+import { Spy, provideAutoSpy } from 'jest-auto-spies';
 
 describe('BudgetService', () => {
   let service: BudgetService;
+  let budgetRepositorySpy: Spy<BudgetRepository>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [BudgetService],
+      providers: [provideAutoSpy(BudgetRepository), BudgetService],
     }).compile();
 
-    service = module.get<BudgetService>(BudgetService);
+    service = module.get(BudgetService);
+    budgetRepositorySpy = module.get(BudgetRepository);
   });
 
   test('should add a budget', async () => {
@@ -23,9 +27,9 @@ describe('BudgetService', () => {
     };
 
     const expectedResult = service.createBudget(budget1);
-    const { _id } = expectedResult;
+    const { id } = expectedResult;
 
-    const actualResult = service.findBudgetById(_id);
+    const actualResult = service.findBudgetById(id);
 
     expect(actualResult).toEqual(expectedResult);
   });
@@ -40,9 +44,9 @@ describe('BudgetService', () => {
       .create();
 
     service.setBudgets = [expectedResult];
-    const { _id } = expectedResult;
+    const { id } = expectedResult;
 
-    const actualResult = service.findBudgetById(_id);
+    const actualResult = service.findBudgetById(id);
 
     expect(actualResult).toEqual(expectedResult);
   });

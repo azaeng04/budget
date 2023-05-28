@@ -1,4 +1,4 @@
-import { Budget } from '../budget.model';
+import { Budget } from '../budget.entity';
 import { BudgetModelListBuilder } from './budget.model.list.builder';
 
 export interface IBudgetModel {
@@ -28,8 +28,12 @@ export class BudgetModelBuilder {
   }
 
   private buildBudgetModel(builder: BudgetModelBuilder) {
-    const budget = new Budget(builder.id, builder.name, builder.year);
-    budget._description = builder.description;
+    const budget: Budget = {
+      id: builder.id,
+      name: builder.name,
+      description: builder.description,
+      year: builder.year,
+    };
     return budget;
   }
 
