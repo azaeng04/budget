@@ -1,14 +1,17 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
     "target": "es2016",
     "module": "commonjs",
     "esModuleInterop": true,
+    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
     "paths": {
-      "api-budget-sql": ["api-budget-sql/src/index.ts"],
-      "shared/api-budget-sql": ["shared/api-budget-sql/src/index.ts"]
+      "@/in-memory-db": ["in-memory-db/src/index.ts"],
+      "@/shared/in-memory-db": ["shared/in-memory-db/src/index.ts"]
     }
   }
 }

@@ -39,3 +39,9 @@ testem.log
 Thumbs.db
 **/.stryker-tmp/**
 **/.pnpm-store/**
+.angular
+
+# Playwright
+**/test-results/
+**/playwright-report/
+**/playwright/.cache/

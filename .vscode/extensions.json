@@ -8,6 +8,7 @@
     "wix.vscode-import-cost",
     "ms-playwright.playwright",
     "WallabyJs.wallaby-vscode",
-    "WallabyJs.quokka-vscode"
+    "WallabyJs.quokka-vscode",
+    "firsttris.vscode-jest-runner"
   ]
 }
